@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#17334a" />
+    <meta
+      name="description"
+      content="A small, playful desktop for ideas, projects, and things worth keeping."
+    />
+    <title>Patchwork — a personal desktop</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./app.js" defer></script>
+  </head>
+  <body>
+    <main class="desktop" id="desktop" aria-label="Patchwork personal desktop">
+      <svg
+        class="wallpaper"
+        viewBox="0 0 1600 900"
+        preserveAspectRatio="xMidYMid slice"
+        aria-hidden="true"
+      >
+        <defs>
+          <linearGradient id="sky" x1="0" y1="0" x2="0.92" y2="1">
+            <stop offset="0" stop-color="#385c70" />
+            <stop offset="0.46" stop-color="#6f9b9a" />
+            <stop offset="1" stop-color="#d3ad77" />
+          </linearGradient>
+          <linearGradient id="water" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#486d75" />
+            <stop offset="1" stop-color="#173c50" />
+          </linearGradient>
+          <linearGradient id="hill" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#748d70" />
+            <stop offset="1" stop-color="#365d55" />
+          </linearGradient>
+        </defs>
+        <rect width="1600" height="900" fill="url(#sky)" />
+        <circle cx="1190" cy="235" r="102" fill="#efc486" opacity=".88" />
+        <path
+          d="M0 520C195 468 311 474 483 527s305 53 482-2 375-86 635-12v387H0Z"
+          fill="#82947c"
+          opacity=".84"
+        />
+        <path
+          d="M0 602c176-83 357-63 525 15s321 62 504-5 372-79 571 9v279H0Z"
+          fill="url(#hill)"
+        />
+        <path
+          d="M0 673c209-55 374-31 551 38s349 83 517 20 340-65 532-4v173H0Z"
+          fill="url(#water)"
+        />
+        <g fill="none" stroke="#e8d5ae" stroke-linecap="round" opacity=".58">
+          <path
+            d="M225 743h290m-195 30h385m310-62h282m-516 112h198m-791-6h152m713-20h201"
+            stroke-width="5"
+          />
+          <path
+            d="M660 706h102m360 60h134m-674 68h192"
+            stroke-width="2"
+            opacity=".8"
+          />
+        </g>
+        <g fill="#213e43" opacity=".78">
+          <path
+            d="M127 643c10-55 24-91 41-117 17 26 30 62 41 117h-17l19 47h-85l20-47Z"
+          />
+          <path
+            d="M1390 611c8-42 20-70 34-90 14 20 25 48 34 90h-14l16 38h-70l16-38Z"
+          />
+          <path
+            d="M1471 657c7-31 14-52 25-67 11 15 19 36 25 67h-11l12 29h-52l12-29Z"
+          />
+        </g>
+        <g fill="#e4c99c" opacity=".5">
+          <ellipse cx="772" cy="817" rx="106" ry="5" />
+          <ellipse cx="1202" cy="787" rx="64" ry="4" />
+          <ellipse cx="397" cy="851" rx="76" ry="4" />
+        </g>
+      </svg>
+      <div class="wallpaper-grain" aria-hidden="true"></div>
+
+      <header class="topbar">
+        <div class="topbar-left">
+          <button
+            class="brand-mark"
+            data-menu-toggle="launcherMenu"
+            aria-label="Open Patchwork menu"
+          >
+            p
+          </button>
+          <span class="brand-name">patchwork</span>
+          <nav class="menu-nav" aria-label="Desktop menu">
+            <button class="menu-trigger" data-menu-toggle="launcherMenu">
+              Explore
+            </button>
+            <button class="menu-trigger" data-menu-toggle="viewMenu">
+              Window
+            </button>
+            <button class="menu-trigger" data-app="about">About</button>
+          </nav>
+        </div>
+        <div class="topbar-right">
+          <span class="status-chip"
+            ><span class="status-dot"></span> All systems gentle</span
+          >
+          <span class="topbar-divider" aria-hidden="true"></span>
+          <time class="clock" id="clock" aria-label="Current local time"></time>
+          <button
+            class="mobile-launcher"
+            data-menu-toggle="launcherMenu"
+            aria-label="Open apps"
+          >
+            ☰
+          </button>
+        </div>
+        <div class="menu-popover launcher-menu" id="launcherMenu" hidden>
+          <div class="menu-heading">OPEN A LITTLE SOMETHING</div>
+          <button data-app="welcome">
+            <span class="mini-app-icon welcome-color">✳</span
+            ><span>Welcome</span><kbd>⌘ 1</kbd>
+          </button>
+          <button data-app="journal">
+            <span class="mini-app-icon journal-color">✎</span
+            ><span>Journal</span><kbd>⌘ 2</kbd>
+          </button>
+          <button data-app="workbench">
+            <span class="mini-app-icon workbench-color">▦</span
+            ><span>Workbench</span><kbd>⌘ 3</kbd>
+          </button>
+          <button data-app="about">
+            <span class="mini-app-icon about-color">i</span
+            ><span>About this space</span>
+          </button>
+        </div>
+        <div class="menu-popover view-menu" id="viewMenu" hidden>
+          <div class="menu-heading">WINDOWS</div>
+          <button data-action="arrange">Arrange open windows</button>
+          <button data-action="close-all">Close all windows</button>
+        </div>
+      </header>
+
+      <section class="desktop-space" aria-label="Desktop apps and open windows">
+        <div class="desktop-icons" aria-label="Apps">
+          <button class="desktop-icon" data-app="welcome">
+            <span class="desktop-icon-art welcome-color"><span>✳</span></span>
+            <span>Welcome</span>
+          </button>
+          <button class="desktop-icon" data-app="journal">
+            <span class="desktop-icon-art journal-color"><span>✎</span></span>
+            <span>Journal</span>
+          </button>
+          <button class="desktop-icon" data-app="workbench">
+            <span class="desktop-icon-art workbench-color"><span>▦</span></span>
+            <span>Workbench</span>
+          </button>
+          <button class="desktop-icon" data-app="about">
+            <span class="desktop-icon-art about-color"><span>i</span></span>
+            <span>About me</span>
+          </button>
+        </div>
+
+        <section
+          class="app-window welcome-window"
+          id="window-welcome"
+          data-window="welcome"
+          aria-labelledby="welcome-title"
+        >
+          <header class="window-titlebar" data-drag-handle>
+            <div class="window-controls">
+              <button
+                class="window-control close-control"
+                data-window-action="close"
+                aria-label="Close Welcome"
+              ></button>
+              <button
+                class="window-control minimize-control"
+                data-window-action="minimize"
+                aria-label="Minimize Welcome"
+              ></button>
+              <button
+                class="window-control maximize-control"
+                data-window-action="maximize"
+                aria-label="Maximize Welcome"
+              ></button>
+            </div>
+            <span class="window-title">Welcome / Start here</span>
+            <span class="window-title-spacer" aria-hidden="true"></span>
+          </header>
+          <div class="window-content welcome-content">
+            <div class="welcome-hero">
+              <div class="welcome-orbit" aria-hidden="true">
+                <span>✳</span>
+              </div>
+              <div class="welcome-copy">
+                <p class="eyebrow">A DESKTOP WITH A LITTLE HEART</p>
+                <h1 id="welcome-title">Hi, you<br /><em>made it.</em></h1>
+                <p class="welcome-intro">
+                  This is a small map of what I’m making, learning, and
+                  collecting along the way.
+                </p>
+                <button class="primary-button" data-app="workbench">
+                  Take a look around <span aria-hidden="true">↗</span>
+                </button>
+              </div>
+            </div>
+            <div class="welcome-footer">
+              <span><i class="tiny-sparkle">✳</i> No rush. Poke around.</span
+              ><span>EST. IN CURIOSITY</span>
+            </div>
+          </div>
+        </section>
+
+        <section
+          class="app-window journal-window"
+          id="window-journal"
+          data-window="journal"
+          aria-labelledby="journal-title"
+          hidden
+        >
+          <header class="window-titlebar" data-drag-handle>
+            <div class="window-controls">
+              <button
+                class="window-control close-control"
+                data-window-action="close"
+                aria-label="Close Journal"
+              ></button>
+              <button
+                class="window-control minimize-control"
+                data-window-action="minimize"
+                aria-label="Minimize Journal"
+              ></button>
+              <button
+                class="window-control maximize-control"
+                data-window-action="maximize"
+                aria-label="Maximize Journal"
+              ></button>
+            </div>
+            <span class="window-title" id="journal-title"
+              >Journal / Loose thoughts</span
+            >
+            <span class="save-indicator" id="saveIndicator">Saved locally</span>
+          </header>
+          <div class="journal-layout">
+            <aside class="journal-sidebar">
+              <div class="sidebar-label">PAGES <span>✳</span></div>
+              <div
+                class="note-list"
+                id="noteList"
+                role="tablist"
+                aria-label="Journal pages"
+              ></div>
+              <p class="journal-sidebar-note">
+                A place for unfinished thoughts and useful scraps.
+              </p>
+            </aside>
+            <article class="note-paper">
+              <div class="note-date" id="noteDate"></div>
+              <h2 class="note-heading" id="noteHeading"></h2>
+              <div
+                class="note-body"
+                id="noteBody"
+                contenteditable="true"
+                role="textbox"
+                aria-label="Edit journal entry"
+                aria-multiline="true"
+                spellcheck="true"
+              ></div>
+              <div class="note-signoff">— keep following the thread</div>
+            </article>
+          </div>
+        </section>
+
+        <section
+          class="app-window workbench-window"
+          id="window-workbench"
+          data-window="workbench"
+          aria-labelledby="workbench-title"
+          hidden
+        >
+          <header class="window-titlebar" data-drag-handle>
+            <div class="window-controls">
+              <button
+                class="window-control close-control"
+                data-window-action="close"
+                aria-label="Close Workbench"
+              ></button>
+              <button
+                class="window-control minimize-control"
+                data-window-action="minimize"
+                aria-label="Minimize Workbench"
+              ></button>
+              <button
+                class="window-control maximize-control"
+                data-window-action="maximize"
+                aria-label="Maximize Workbench"
+              ></button>
+            </div>
+            <span class="window-title" id="workbench-title"
+              >Workbench / Things in motion</span
+            >
+            <span class="window-title-spacer" aria-hidden="true"></span>
+          </header>
+          <div class="workbench-content">
+            <div class="workbench-heading-row">
+              <div>
+                <p class="eyebrow">A FEW THINGS TAKING SHAPE</p>
+                <h2>Workbench<span class="heading-period">.</span></h2>
+              </div>
+              <button class="outline-button" id="newProjectButton">
+                <span>＋</span> New idea
+              </button>
+            </div>
+            <p class="workbench-intro">
+              Some experiments are tools. Some are just good questions with a
+              place to grow.
+            </p>
+            <form class="project-form" id="projectForm" hidden>
+              <label for="projectName">Name your next idea</label>
+              <div>
+                <input
+                  id="projectName"
+                  maxlength="48"
+                  placeholder="A tiny idea with room to grow"
+                  required
+                /><button class="primary-button" type="submit">
+                  Add it <span>↗</span>
+                </button>
+              </div>
+            </form>
+            <div
+              class="project-filters"
+              role="tablist"
+              aria-label="Filter projects"
+            >
+              <button class="filter-chip active" data-filter="all">
+                All <span id="projectCount">3</span>
+              </button>
+              <button class="filter-chip" data-filter="building">
+                In motion
+              </button>
+              <button class="filter-chip" data-filter="experiment">
+                Experiments
+              </button>
+            </div>
+            <div class="project-grid" id="projectGrid"></div>
+            <div class="workbench-footer">
+              <span><i>✳</i> progress is allowed to be messy</span
+              ><span id="ideaCount"></span>
+            </div>
+          </div>
+        </section>
+
+        <section
+          class="app-window about-window"
+          id="window-about"
+          data-window="about"
+          aria-labelledby="about-title"
+          hidden
+        >
+          <header class="window-titlebar" data-drag-handle>
+            <div class="window-controls">
+              <button
+                class="window-control close-control"
+                data-window-action="close"
+                aria-label="Close About this space"
+              ></button>
+              <button
+                class="window-control minimize-control"
+                data-window-action="minimize"
+                aria-label="Minimize About this space"
+              ></button>
+              <button
+                class="window-control maximize-control"
+                data-window-action="maximize"
+                aria-label="Maximize About this space"
+              ></button>
+            </div>
+            <span class="window-title" id="about-title"
+              >About / A few coordinates</span
+            >
+            <span class="window-title-spacer" aria-hidden="true"></span>
+          </header>
+          <div class="about-content">
+            <div class="about-stamp" aria-hidden="true">
+              <span>✳</span><small>CURIOUS<br />BY DEFAULT</small>
+            </div>
+            <p class="eyebrow">A NOTE ABOUT THIS CORNER</p>
+            <h2>Useful things<br />can feel <em>human.</em></h2>
+            <p class="about-copy">
+              I like turning a good question into something you can try, touch,
+              or share. This desktop gathers a few projects and passing thoughts
+              in one place.
+            </p>
+            <div class="about-tags">
+              <span>make things</span><span>learn out loud</span
+              ><span>stay curious</span>
+            </div>
+            <button class="text-link" data-app="journal">
+              Read a journal page <span>↗</span>
+            </button>
+            <p class="ai-note">
+              AI note · ChatGPT drafted the first version of this desktop from a
+              project brief.
+            </p>
+          </div>
+        </section>
+      </section>
+
+      <footer class="desktop-footer">
+        <div class="desktop-caption">
+          <span class="caption-mark">✳</span
+          ><span>Somewhere between an idea and a thing.</span>
+        </div>
+        <nav class="dock" aria-label="App dock">
+          <button class="dock-app" data-app="welcome" aria-label="Open Welcome">
+            <span class="dock-icon welcome-color">✳</span
+            ><span class="dock-tooltip">Welcome</span
+            ><i class="dock-indicator"></i>
+          </button>
+          <button class="dock-app" data-app="journal" aria-label="Open Journal">
+            <span class="dock-icon journal-color">✎</span
+            ><span class="dock-tooltip">Journal</span
+            ><i class="dock-indicator"></i>
+          </button>
+          <button
+            class="dock-app"
+            data-app="workbench"
+            aria-label="Open Workbench"
+          >
+            <span class="dock-icon workbench-color">▦</span
+            ><span class="dock-tooltip">Workbench</span
+            ><i class="dock-indicator"></i>
+          </button>
+          <button
+            class="dock-app"
+            data-app="about"
+            aria-label="Open About this space"
+          >
+            <span class="dock-icon about-color">i</span
+            ><span class="dock-tooltip">About me</span
+            ><i class="dock-indicator"></i>
+          </button>
+        </nav>
+        <div class="desktop-weather">
+          <span>◒</span> made with patience
+          <span class="weather-divider">·</span> <span id="dateLabel"></span>
+        </div>
+      </footer>
+      <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    </main>
+  </body>
+</html>
